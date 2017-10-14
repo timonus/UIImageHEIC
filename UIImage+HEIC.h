@@ -11,6 +11,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// Returns and NSData HEIC representation of the image if possible, otherwise returns nil.
-NSData *_Nullable UIImageHEICRepresentation(UIImage *const image, const CGFloat compressionQuality);
+NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFloat compressionQuality);
 
 NS_ASSUME_NONNULL_END

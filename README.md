@@ -8,7 +8,7 @@ Add the UIImage+HEIC.h and UIImage+HEIC.m source files to your project. At the m
 
 ## Usage
 
-This adds a function named `UIImageHEICRepresentation` that behaves just like `UIImageJPEGRepresentation`. The method returns `nil` in the event that HEIC encoding isn't possible on the current device.
+This adds a function named `tj_UIImageHEICRepresentation` that behaves just like `UIImageJPEGRepresentation`. The method returns `nil` in the event that HEIC encoding isn't possible on the current device.
 
 So, where you used to have
 
@@ -21,7 +21,7 @@ You could now have
 
 ```
 UIImage *image = /**/;
-NSData *imageData = UIImageHEICRepresentation(image, 0.8);
+NSData *imageData = tj_UIImageHEICRepresentation(image, 0.8);
 if (imageData.length == 0) {
     imageData = UIImageJPEGRepresentation(image, 0.8);
 }

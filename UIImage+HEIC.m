@@ -9,7 +9,7 @@
 #import "UIImage+HEIC.h"
 #import <AVFoundation/AVMediaFormat.h>
 
-NSData *_Nullable UIImageHEICRepresentation(UIImage *const image, const CGFloat compressionQuality)
+NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFloat compressionQuality)
 {
     NSData *imageData = nil;
     if (@available(iOS 11.0, *)) {
