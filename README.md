@@ -8,6 +8,8 @@ Add the UIImage+HEIC.h and UIImage+HEIC.m source files to your project. At the m
 
 ## Usage
 
+### Converting `UIImage`s to HEIC
+
 This adds a function named `tj_UIImageHEICRepresentation` that behaves just like `UIImageJPEGRepresentation`. The method returns `nil` in the event that HEIC encoding isn't possible on the current device.
 
 So, where you used to have
@@ -25,4 +27,36 @@ NSData *imageData = tj_UIImageHEICRepresentation(image, 0.8);
 if (imageData.length == 0) {
     imageData = UIImageJPEGRepresentation(image, 0.8);
 }
+```
+
+### `UIGraphicsImageRenderer` Extensions
+
+This project also adds a category to `UIGraphicsImageRenderer` for HEIC exporting support with fallbacks to PNG or JPEG. It's used just like you use `UIGraphicsImageRenderer`'s existing PNG and JPEG exporting methods.
+
+Before
+
+```
+UIGraphicsImageRenderer *renderer = /**/;
+NSData *data = [renderer PNGDataWithActions:/**/];
+```
+
+After with no fallback
+
+```
+UIGraphicsImageRenderer *renderer = /**/;
+NSData *data = [renderer tj_HEICDataWithCompressionQuality:1.0 actions:/**/];
+```
+
+After falling back to PNG
+
+```
+UIGraphicsImageRenderer *renderer = /**/;
+NSData *data = [renderer tj_HEICDataFallingBackToPNGDataWithCompressionQuality:1.0 actions:/**/];
+```
+
+After falling back to JPEG
+
+```
+UIGraphicsImageRenderer *renderer = /**/;
+NSData *data = [renderer tj_HEICDataWithCompressionQuality:1.0 fallingBackToJPEGDataWithCompressionQuality:1.0 actions:/**/];
 ```
