@@ -9,9 +9,12 @@
 #import "UIImage+HEIC.h"
 #import <AVFoundation/AVMediaFormat.h>
 
+#define SIMULATE_HEIC_UNAVAILABLE 0
+
 NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFloat compressionQuality)
 {
     NSData *imageData = nil;
+#if !SIMULATE_HEIC_UNAVAILABLE
     if (@available(iOS 11.0, *)) {
         if (image) {
             NSMutableData *destinationData = [NSMutableData new];
@@ -25,6 +28,7 @@ NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFlo
             }
         }
     }
+#endif
     return imageData;
 }
 
