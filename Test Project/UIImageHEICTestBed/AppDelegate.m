@@ -18,7 +18,7 @@
     
     {
         NSData *highQualityJPEGData = UIImageJPEGRepresentation(image, 1.0);
-        NSData *highQualityHEICData = UIImageHEICRepresentation(image, 1.0);
+        NSData *highQualityHEICData = tj_UIImageHEICRepresentation(image, 1.0);
         NSUInteger highQualityJPEGDataLength = highQualityJPEGData.length;
         NSUInteger highQualityHEICDataLength = highQualityHEICData.length;
         
@@ -30,7 +30,7 @@
     
     {
         NSData *lowQualityJPEGData = UIImageJPEGRepresentation(image, 0.5);
-        NSData *lowQualityHEICData = UIImageHEICRepresentation(image, 0.5);
+        NSData *lowQualityHEICData = tj_UIImageHEICRepresentation(image, 0.5);
         NSUInteger lowQualityJPEGDataLength = lowQualityJPEGData.length;
         NSUInteger lowQualityHEICDataLength = lowQualityHEICData.length;
         
