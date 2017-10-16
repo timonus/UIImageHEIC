@@ -27,4 +27,10 @@ NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFlo
 
 @end
 
+@interface UIDevice (TJHEICAdditions)
+
++ (BOOL)isHEICWritingSupported;
+
+@end
+
 NS_ASSUME_NONNULL_END

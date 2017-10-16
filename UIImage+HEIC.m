@@ -76,3 +76,24 @@ NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFlo
 }
 
 @end
+
+@implementation UIDevice (TJHEICAdditions)
+
++ (BOOL)isHEICWritingSupported
+{
+    static BOOL isHEICSupported = NO;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (@available(iOS 11.0, *)) {
+            NSMutableData *data = [NSMutableData data];
+            CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)data, (__bridge CFStringRef)AVFileTypeHEIC, 1, nil);
+            if (destination) {
+                isHEICSupported = YES;
+                CFRelease(destination);
+            }
+        }
+    });
+    return isHEICSupported;
+}
+
+@end
