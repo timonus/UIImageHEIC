@@ -82,6 +82,7 @@ NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFlo
 + (BOOL)isHEICWritingSupported
 {
     static BOOL isHEICSupported = NO;
+#if !SIMULATE_HEIC_UNAVAILABLE
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (@available(iOS 11.0, *)) {
@@ -93,6 +94,7 @@ NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFlo
             }
         }
     });
+#endif
     return isHEICSupported;
 }
 
