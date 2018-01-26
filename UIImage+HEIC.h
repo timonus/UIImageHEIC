@@ -33,4 +33,7 @@ NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFlo
 
 @end
 
+BOOL tj_CGImageSourceUTIIsHEIC(const CGImageSourceRef imageSource);
+BOOL tj_isImageAtPathHEIC(NSString *const path);
+
 NS_ASSUME_NONNULL_END

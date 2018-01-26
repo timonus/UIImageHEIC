@@ -99,3 +99,26 @@ NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFlo
 }
 
 @end
+
+BOOL tj_CGImageSourceUTIIsHEIC(const CGImageSourceRef imageSource)
+{
+    BOOL isHEIC = NO;
+    if (@available(iOS 11.0, *)) {
+        if (imageSource) {
+            NSString *const uti = (__bridge_transfer NSString *)CGImageSourceGetType(imageSource);
+            isHEIC = [uti isEqualToString:AVFileTypeHEIC];
+        }
+    }
+    return isHEIC;
+}
+
+BOOL tj_isImageAtPathHEIC(NSString *const path)
+{
+    BOOL isHEIC = NO;
+    const CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:path], nil);
+    if (imageSource) {
+        isHEIC = tj_CGImageSourceUTIIsHEIC(imageSource);
+        CFRelease(imageSource);
+    }
+    return isHEIC;
+}
