@@ -60,3 +60,17 @@ After falling back to JPEG
 UIGraphicsImageRenderer *renderer = /**/;
 NSData *data = [renderer tj_HEICDataWithCompressionQuality:1.0 fallingBackToJPEGDataWithCompressionQuality:1.0 actions:/**/];
 ```
+
+### Checking HEIC images
+
+You can check if the image at a particular path is a HEIC image using `tj_isImageAtPathHEIC` on devices that support HEIC reading.
+
+```
+BOOL isHEICImage = tj_isImageAtPathHEIC(/*path to an image*/);
+```
+
+For lower level access you can also use `tj_CGImageSourceUTIIsHEIC`, which allows you to check using an image source made from data or a URL, and is also helpful if you want to immediately use the image source to perform a transformation in the event it is HEIC.
+
+```
+BOOL isHEICImageSource = tj_CGImageSourceUTIIsHEIC(/*image source*);
+```
