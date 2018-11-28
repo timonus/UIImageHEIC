@@ -1,6 +1,6 @@
 # UIImageHEIC
 
-Apple introduced widespread HEIC support with iOS 11, but the APIs for it are somewhat low level. This tiny project adds a familiar interface for encoding `UIImage`s into HEIC data similar to what we're doing with JPEG or PNG data.
+Apple introduced widespread HEIC support with iOS 11, but the APIs for it are somewhat low level. This tiny project adds a familiar interface for encoding `UIImage`s into HEIC data similar to what we're used to doing with JPEG or PNG data.
 
 ## Installation
 
