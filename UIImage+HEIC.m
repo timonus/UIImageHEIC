@@ -115,7 +115,7 @@ BOOL tj_CGImageSourceUTIIsHEIC(const CGImageSourceRef imageSource)
 BOOL tj_isImageAtPathHEIC(NSString *const path)
 {
     BOOL isHEIC = NO;
-    const CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:path], nil);
+    const CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:path isDirectory:NO], nil);
     if (imageSource) {
         isHEIC = tj_CGImageSourceUTIIsHEIC(imageSource);
         CFRelease(imageSource);
