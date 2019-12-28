@@ -14,14 +14,14 @@ This adds a function named `tj_UIImageHEICRepresentation` that behaves just like
 
 So, where you used to have
 
-```
+```objc
 UIImage *image = /**/;
 NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
 ```
 
 You could now have
 
-```
+```objc
 UIImage *image = /**/;
 NSData *imageData = tj_UIImageHEICRepresentation(image, 0.8);
 if (imageData.length == 0) {
@@ -35,28 +35,28 @@ This project also adds a category to `UIGraphicsImageRenderer` for HEIC exportin
 
 Before
 
-```
+```objc
 UIGraphicsImageRenderer *renderer = /**/;
 NSData *data = [renderer PNGDataWithActions:/**/];
 ```
 
 After with no fallback
 
-```
+```objc
 UIGraphicsImageRenderer *renderer = /**/;
 NSData *data = [renderer tj_HEICDataWithCompressionQuality:1.0 actions:/**/];
 ```
 
 After falling back to PNG
 
-```
+```objc
 UIGraphicsImageRenderer *renderer = /**/;
 NSData *data = [renderer tj_HEICDataFallingBackToPNGDataWithCompressionQuality:1.0 actions:/**/];
 ```
 
 After falling back to JPEG
 
-```
+```objc
 UIGraphicsImageRenderer *renderer = /**/;
 NSData *data = [renderer tj_HEICDataWithCompressionQuality:1.0 fallingBackToJPEGDataWithCompressionQuality:1.0 actions:/**/];
 ```
@@ -65,12 +65,12 @@ NSData *data = [renderer tj_HEICDataWithCompressionQuality:1.0 fallingBackToJPEG
 
 You can check if the image at a particular path is a HEIC image using `tj_isImageAtPathHEIC` on devices that support HEIC reading.
 
-```
+```objc
 BOOL isHEICImage = tj_isImageAtPathHEIC(/*path to an image*/);
 ```
 
 For lower level access you can also use `tj_CGImageSourceUTIIsHEIC`, which allows you to check using an image source made from data or a URL, and is also helpful if you want to immediately use the image source to perform a transformation in the event it is HEIC.
 
-```
+```objc
 BOOL isHEICImageSource = tj_CGImageSourceUTIIsHEIC(/*image source*);
 ```
