@@ -8,6 +8,7 @@
 
 #import "UIImage+HEIC.h"
 #import <AVFoundation/AVMediaFormat.h>
+#import <pthread.h>
 
 #define SIMULATE_HEIC_UNAVAILABLE 0
 
@@ -21,8 +22,17 @@ NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFlo
             CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)destinationData, (__bridge CFStringRef)AVFileTypeHEIC, 1, NULL);
             if (destination) {
                 NSDictionary *options = @{(__bridge NSString *)kCGImageDestinationLossyCompressionQuality: @(compressionQuality)};
+
+                // iOS devices seem to corrupt image data when concurrently creating HEIC images.
+                // Locking to ensure HEIC creation doesn't occur concurrently.
+                pthread_mutex_t *lock = tj_HEICEncodingLock();
+                pthread_mutex_lock(lock);
+                
                 CGImageDestinationAddImage(destination, image.CGImage, (__bridge CFDictionaryRef)options);
                 CGImageDestinationFinalize(destination);
+                
+                pthread_mutex_unlock(lock);
+                
                 imageData = destinationData;
                 CFRelease(destination);
             }
@@ -121,4 +131,14 @@ BOOL tj_isImageAtPathHEIC(NSString *const path)
         CFRelease(imageSource);
     }
     return isHEIC;
+}
+
+pthread_mutex_t *tj_HEICEncodingLock(void)
+{
+    static pthread_mutex_t lock;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        pthread_mutex_init(&lock, nil);
+    });
+    return &lock;
 }
