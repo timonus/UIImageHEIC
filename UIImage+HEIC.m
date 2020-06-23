@@ -42,6 +42,9 @@ NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFlo
     return imageData;
 }
 
+#if defined(__IPHONE_14_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_14_0
+__attribute__((objc_direct_members))
+#endif
 @implementation UIGraphicsImageRenderer (TJHEICAdditions)
 
 - (nullable NSData *)tj_HEICDataWithCompressionQuality:(const CGFloat)compressionQuality
@@ -87,6 +90,9 @@ NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFlo
 
 @end
 
+#if defined(__IPHONE_14_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_14_0
+__attribute__((objc_direct_members))
+#endif
 @implementation UIDevice (TJHEICAdditions)
 
 + (BOOL)isHEICWritingSupported
