@@ -102,12 +102,8 @@ __attribute__((objc_direct_members))
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (@available(iOS 11.0, *)) {
-            NSMutableData *data = [NSMutableData data];
-            CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)data, (__bridge CFStringRef)AVFileTypeHEIC, 1, nil);
-            if (destination) {
-                isHEICSupported = YES;
-                CFRelease(destination);
-            }
+            // https://developer.apple.com/forums/thread/129662
+            isHEICSupported = [(__bridge_transfer NSArray<NSString *> *)CGImageDestinationCopyTypeIdentifiers() containsObject:AVFileTypeHEIC];
         }
     });
 #endif
