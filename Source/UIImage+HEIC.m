@@ -16,13 +16,16 @@ NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFlo
 {
     NSData *imageData = nil;
 #if !SIMULATE_HEIC_UNAVAILABLE
-    if (@available(iOS 11.0, *)) {
+#if !defined(__IPHONE_11) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_11
+    if (@available(iOS 11.0, *))
+#endif
+    {
         if (image) {
             NSMutableData *destinationData = [NSMutableData new];
             CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)destinationData, (__bridge CFStringRef)AVFileTypeHEIC, 1, NULL);
             if (destination) {
                 NSDictionary *options = @{(__bridge NSString *)kCGImageDestinationLossyCompressionQuality: @(compressionQuality)};
-
+                
                 // iOS devices seem to corrupt image data when concurrently creating HEIC images.
                 // Locking to ensure HEIC creation doesn't occur concurrently.
                 pthread_mutex_t *lock = tj_HEICEncodingLock();
@@ -101,7 +104,10 @@ __attribute__((objc_direct_members))
 #if !SIMULATE_HEIC_UNAVAILABLE
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        if (@available(iOS 11.0, *)) {
+#if !defined(__IPHONE_11) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_11
+        if (@available(iOS 11.0, *))
+#endif
+        {
             // https://developer.apple.com/forums/thread/129662
             isHEICSupported = [(__bridge_transfer NSArray<NSString *> *)CGImageDestinationCopyTypeIdentifiers() containsObject:AVFileTypeHEIC];
         }
@@ -115,7 +121,10 @@ __attribute__((objc_direct_members))
 BOOL tj_CGImageSourceUTIIsHEIC(const CGImageSourceRef imageSource)
 {
     BOOL isHEIC = NO;
-    if (@available(iOS 11.0, *)) {
+#if !defined(__IPHONE_11) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_11
+    if (@available(iOS 11.0, *))
+#endif
+    {
         if (imageSource) {
             NSString *const uti = (__bridge_transfer NSString *)CGImageSourceGetType(imageSource);
             isHEIC = [uti isEqualToString:AVFileTypeHEIC];
