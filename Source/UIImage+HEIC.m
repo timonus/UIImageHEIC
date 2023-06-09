@@ -16,6 +16,13 @@ NSData *_Nullable tj_UIImageHEICRepresentation(UIImage *const image, const CGFlo
 {
     NSData *imageData = nil;
 #if !SIMULATE_HEIC_UNAVAILABLE
+#if defined(__IPHONE_17_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_17_0
+    if (compressionQuality >= 1.0) {
+        if (@available(iOS 17.0, *)) {
+            return UIImageHEICRepresentation(image);
+        }
+    }
+#endif
 #if !defined(__IPHONE_11) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_11
     if (@available(iOS 11.0, *))
 #endif
