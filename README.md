@@ -74,3 +74,7 @@ For lower level access you can also use `tj_CGImageSourceUTIIsHEIC`, which allow
 ```objc
 BOOL isHEICImageSource = tj_CGImageSourceUTIIsHEIC(/*image source*);
 ```
+
+## Why Use This > iOS 17?
+
+iOS 17 added `UIImageHEICRepresentation`, hooray! You still might want to use this if you would like to generate lossy HEIC images, as `UIImageHEICRepresentation` doesn’t support specifying a compression quality.
